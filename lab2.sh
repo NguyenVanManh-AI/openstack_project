@@ -66,5 +66,18 @@ echo "Floating IP Address: $FLOATING_IP_ADDRESS"
 echo "Associating floating IP with server..."
 microstack.openstack floating ip set --port $PORT_ID $FLOATING_IP_ID
 
+# Bước 12: Kiểm tra trạng thái của server Web-Server trước khi kết thúc
+echo "Waiting for Web-Server to become ACTIVE..."
+while true; do
+    SERVER_STATUS=$(microstack.openstack server show Web-Server -f value -c status)
+    if [[ "$SERVER_STATUS" == "ACTIVE" ]]; then
+        echo "Web-Server is ACTIVE."
+        break
+    else
+        echo "Waiting for Web-Server to become ACTIVE..."
+        sleep 5
+    fi
+done
+
 # Kết thúc
 echo "Script execution completed!"
