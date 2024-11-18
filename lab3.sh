@@ -44,6 +44,17 @@ OfficePortID=$(microstack.openstack port create --network Office-Net --fixed-ip 
 echo "Create Office-VM server and assign port"
 microstack.openstack server create --flavor m1.tiny --image cirros --key-name keyManh --security-group default --port $OfficePortID Office-VM
 
+# Chờ cho đến khi Office-VM ở trạng thái "ACTIVE"
+echo "Waiting for Office-VM to become ACTIVE..."
+status=$(microstack.openstack server show Office-VM -f value -c status)
+while [ "$status" != "ACTIVE" ]; do
+  echo "Office-VM is in status: $status. Waiting..."
+  sleep 5
+  status=$(microstack.openstack server show Office-VM -f value -c status)
+done
+# Tiếp tục khi Office-VM đã ACTIVE
+echo "Office-VM is ACTIVE. Proceeding with Floating IP assignment."
+
 # Create Floating IP and assign to Office-VM
 echo "Create Floating IP and assign to Office-VM"
 FloatingIP=$(microstack.openstack floating ip create external -f value -c floating_ip_address)
