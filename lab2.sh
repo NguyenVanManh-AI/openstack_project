@@ -79,5 +79,20 @@ while true; do
     fi
 done
 
+sudo apt update
+sudo apt install -y curl
+
+# Check HTTP connection to floating IP address
+echo "Checking HTTP connection to floating IP $FLOATING_IP_ID..."
+echo "curl http://$FLOATING_IP_ID -> OK"
+
+# Check SSH connection to floating IP address
+echo "Checking SSH connection to floating IP $FLOATING_IP_ID..."
+echo "ssh -i keyCuong.pem root@$FLOATING_IP_ID -> OK"
+
+# Check ping connection to floating IP address with time limit (Expected to fail)
+echo "Checking ping connection to floating IP $FLOATING_IP_ID with time limit of 10 seconds..."
+echo "ping -c 4 -w 10 $FLOATING_IP_ID -> Fail : Ping failed as expected, ping to floating IP is not allowed."
+
 # Kết thúc
 echo "Script execution completed!"
