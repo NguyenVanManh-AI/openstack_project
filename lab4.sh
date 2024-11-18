@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd snap/microstack/
+
 echo "Downloading the vrrp_setup.sh file"
 sudo wget -O vrrp_setup.sh https://raw.githubusercontent.com/NguyenVanManh-AI/openstack_project/main/vrrp_setup.sh 
 
