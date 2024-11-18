@@ -38,6 +38,16 @@ echo "Keypair saved to keyManh.pem"
 echo "Creating VM1"
 microstack.openstack server create --flavor m1.tiny --image cirros --key-name keyManh --security-group default --network $network_id VM1
 
+# Chờ cho đến khi VM1 ở trạng thái "ACTIVE"
+echo "Waiting for VM1 to become ACTIVE..."
+status_vm1=$(microstack.openstack server show VM1 -f value -c status)
+while [ "$status_vm1" != "ACTIVE" ]; do
+  echo "VM1 is in status: $status_vm1. Waiting..."
+  sleep 5
+  status_vm1=$(microstack.openstack server show VM1 -f value -c status)
+done
+echo "VM1 is ACTIVE. Proceeding with VM2 creation."
+
 # Tạo Port cố định cho VM2 và gán địa chỉ IP tĩnh
 echo "Creating port for VM2 with fixed IP"
 port_id=$(microstack.openstack port create --network $network_id --fixed-ip subnet=$subnet_id,ip-address=10.10.10.100 --security-group default my-port -f value -c id)
@@ -46,6 +56,16 @@ echo "Port ID for VM2: $port_id"
 # Tạo VM2 với port cố định
 echo "Creating VM2 with static IP 10.10.10.100"
 microstack.openstack server create --flavor m1.tiny --image cirros --key-name keyManh --security-group default --nic port-id=$port_id VM2
+
+# Chờ cho đến khi VM2 ở trạng thái "ACTIVE"
+echo "Waiting for VM2 to become ACTIVE..."
+status_vm2=$(microstack.openstack server show VM2 -f value -c status)
+while [ "$status_vm2" != "ACTIVE" ]; do
+  echo "VM2 is in status: $status_vm2. Waiting..."
+  sleep 5
+  status_vm2=$(microstack.openstack server show VM2 -f value -c status)
+done
+echo "VM2 is ACTIVE. Proceeding with Floating IP assignment."
 
 # Tạo và gán Floating IP cho VM2, chỉ định địa chỉ IP cụ thể do VM2 có nhiều IP
 echo "Creating Floating IP for VM2"

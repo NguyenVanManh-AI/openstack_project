@@ -68,6 +68,17 @@ LabPortID=$(microstack.openstack port create --network Lab-Net --fixed-ip subnet
 echo "Create Lab-VM server and assign port"
 microstack.openstack server create --flavor m1.tiny --image cirros --key-name keyManh --security-group default --port $LabPortID Lab-VM
 
+# Chờ cho đến khi Lab-VM ở trạng thái "ACTIVE"
+echo "Waiting for Lab-VM to become ACTIVE..."
+status_lab=$(microstack.openstack server show Lab-VM -f value -c status)
+while [ "$status_lab" != "ACTIVE" ]; do
+  echo "Lab-VM is in status: $status_lab. Waiting..."
+  sleep 5
+  status_lab=$(microstack.openstack server show Lab-VM -f value -c status)
+done
+# Tiếp tục khi Lab-VM đã ACTIVE
+echo "Lab-VM is ACTIVE. Proceeding with next steps."
+
 echo "Setting router external gateway"
 microstack.openstack router set --external-gateway external I-Router
 

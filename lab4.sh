@@ -40,9 +40,31 @@ echo "Creating Master  VM with ubuntu16  image and m1.small flavor"
 PORT_ID_MASTER=$(sudo microstack.openstack port show Server-Port-1 -f value -c id)
 microstack.openstack server create --image ubuntu16  --flavor m1.small --key-name keyManh --nic port-id=$PORT_ID_MASTER --user-data vrrp_setup.sh vrrp-master
 
+# Chờ cho đến khi Master VM ở trạng thái "ACTIVE"
+echo "Waiting for Master VM to become ACTIVE..."
+status_master=$(microstack.openstack server show vrrp-master -f value -c status)
+while [ "$status_master" != "ACTIVE" ]; do
+  echo "Master VM is in status: $status_master. Waiting..."
+  sleep 5
+  status_master=$(microstack.openstack server show vrrp-master -f value -c status)
+done
+echo "Master VM is ACTIVE. Proceeding with next steps."
+# Chờ cho đến khi Master VM ở trạng thái "ACTIVE"
+
 echo "Creating Slave  VM with ubuntu16  image and m1.small flavor"
 PORT_ID_SLAVE=$(sudo microstack.openstack port show Server-Port-2 -f value -c id)
 microstack.openstack server create --image ubuntu16   --flavor m1.small --key-name keyManh --nic port-id=$PORT_ID_SLAVE --user-data vrrp_setup.sh vrrp-slave
+
+# Chờ cho đến khi Slave VM ở trạng thái "ACTIVE"
+echo "Waiting for Slave VM to become ACTIVE..."
+status_slave=$(microstack.openstack server show vrrp-slave -f value -c status)
+while [ "$status_slave" != "ACTIVE" ]; do
+  echo "Slave VM is in status: $status_slave. Waiting..."
+  sleep 5
+  status_slave=$(microstack.openstack server show vrrp-slave -f value -c status)
+done
+echo "Slave VM is ACTIVE. Proceeding with next steps."
+# Chờ cho đến khi Slave VM ở trạng thái "ACTIVE"
 
 echo "Creating port for VRRP with fixed IP"
 microstack.openstack port create --network Server-Net --fixed-ip subnet=Server-Subnet,ip-address=10.10.10.200 Server-Port-VRRP
