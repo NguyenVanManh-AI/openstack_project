@@ -1,59 +1,32 @@
 #!/bin/bash
 
 echo "Starting Reset Microstack"
-# Xóa tất cả các máy ảo
+# Xóa Servers
 echo "Deleting all servers..."
-SERVERS=$(microstack.openstack server list -f value -c ID)
-for server in $SERVERS; do
-    microstack.openstack server delete $server
-done
+openstack server list --all-projects -f value -c ID | xargs -I {} openstack server delete {}
 
-# Xóa tất cả các cổng mạng
+# Xóa Ports
 echo "Deleting all ports..."
-PORTS=$(microstack.openstack port list -f value -c ID)
-for port in $PORTS; do
-    microstack.openstack port delete $port
-done
+openstack port list --all-projects -f value -c ID | xargs -I {} openstack port delete {}
 
-# Xóa tất cả các router và gỡ bỏ kết nối
+# Xóa Routers
 echo "Deleting all routers..."
-ROUTERS=$(microstack.openstack router list -f value -c ID)
-for router in $ROUTERS; do
-    # Gỡ bỏ kết nối giữa router và các subnet trước khi xóa
-    SUBNETS=$(microstack.openstack subnet list -f value -c ID)
-    for subnet in $SUBNETS; do
-        microstack.openstack router remove subnet $router $subnet
-    done
-    microstack.openstack router unset --external-gateway $router
-    microstack.openstack router delete $router
-done
+openstack router list --all-projects -f value -c ID | xargs -I {} openstack router delete {}
 
-# Xóa tất cả các subnet
+# Xóa Subnets
 echo "Deleting all subnets..."
-SUBNETS=$(microstack.openstack subnet list -f value -c ID)
-for subnet in $SUBNETS; do
-    microstack.openstack subnet delete $subnet
-done
+openstack subnet list --all-projects -f value -c ID | xargs -I {} openstack subnet delete {}
 
-# Xóa tất cả các mạng
+# Xóa Networks
 echo "Deleting all networks..."
-NETWORKS=$(microstack.openstack network list -f value -c ID)
-for network in $NETWORKS; do
-    microstack.openstack network delete $network
-done
+openstack network list --all-projects -f value -c ID | xargs -I {} openstack network delete {}
 
-# Xóa tất cả các keypair
+# Xóa Keypairs
 echo "Deleting all keypairs..."
-KEYPAIRS=$(microstack.openstack keypair list -f value -c Name)
-for keypair in $KEYPAIRS; do
-    microstack.openstack keypair delete $keypair
-done
+openstack keypair list -f value -c Name | xargs -I {} openstack keypair delete {}
 
-# Xóa tất cả các Floating IPs
+# Xóa Floating IPs
 echo "Deleting all Floating IPs..."
-FLOATING_IPS=$(microstack.openstack floating ip list -f value -c "Floating IP Address")
-for ip in $FLOATING_IPS; do
-    microstack.openstack floating ip delete $ip
-done
+openstack floating ip list -f value -c ID | xargs -I {} openstack floating ip delete {}
 
 echo "Cleanup completed!"
