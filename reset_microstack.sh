@@ -3,30 +3,30 @@
 echo "Starting Reset Microstack"
 # Xóa Servers
 echo "Deleting all servers..."
-openstack server list --all-projects -f value -c ID | xargs -I {} openstack server delete {}
+microstack.openstack server list -f value -c ID | xargs -I {} microstack.openstack server delete {}
 
 # Xóa Ports
 echo "Deleting all ports..."
-openstack port list --all-projects -f value -c ID | xargs -I {} openstack port delete {}
+microstack.openstack port list -f value -c ID | xargs -I {} microstack.openstack port delete {}
 
 # Xóa Routers
 echo "Deleting all routers..."
-openstack router list --all-projects -f value -c ID | xargs -I {} openstack router delete {}
+microstack.openstack router list -f value -c ID | xargs -I {} microstack.openstack router delete {}
 
 # Xóa Subnets
 echo "Deleting all subnets..."
-openstack subnet list --all-projects -f value -c ID | xargs -I {} openstack subnet delete {}
+microstack.openstack subnet list -f value -c ID | xargs -I {} microstack.openstack subnet delete {}
 
 # Xóa Networks
 echo "Deleting all networks..."
-openstack network list --all-projects -f value -c ID | xargs -I {} openstack network delete {}
+microstack.openstack network list -f value -c ID | xargs -I {} microstack.openstack network delete {}
 
 # Xóa Keypairs
 echo "Deleting all keypairs..."
-openstack keypair list -f value -c Name | xargs -I {} openstack keypair delete {}
+microstack.openstack keypair list -f value -c Name | xargs -I {} microstack.openstack keypair delete {}
 
 # Xóa Floating IPs
 echo "Deleting all Floating IPs..."
-openstack floating ip list -f value -c ID | xargs -I {} openstack floating ip delete {}
+microstack.openstack floating ip list -f value -c ID | xargs -I {} microstack.openstack floating ip delete {}
 
 echo "Cleanup completed!"
