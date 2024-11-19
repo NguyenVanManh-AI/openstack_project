@@ -1,4 +1,13 @@
 #!/bin/bash
+
+# reset 
+echo "Downloading the reset_microstack.sh file"
+sudo wget -O reset_microstack.sh https://raw.githubusercontent.com/NguyenVanManh-AI/openstack_project/main/reset_microstack.sh 
+echo "Granting execute permissions for reset_microstack.sh"
+sudo chmod +x reset_microstack.sh
+sudo ./reset_microstack.sh
+# reset 
+
 microstack.openstack network create N1
 microstack.openstack network list
 microstack.openstack subnet create --network N1 --subnet-range 10.10.10.0/24 --gateway 10.10.10.1 --allocation-pool start=10.10.10.10,end=10.10.10.50 S1

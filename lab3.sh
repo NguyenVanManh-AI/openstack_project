@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# reset 
+echo "Downloading the reset_microstack.sh file"
+sudo wget -O reset_microstack.sh https://raw.githubusercontent.com/NguyenVanManh-AI/openstack_project/main/reset_microstack.sh 
+echo "Granting execute permissions for reset_microstack.sh"
+sudo chmod +x reset_microstack.sh
+sudo ./reset_microstack.sh
+# reset 
+
 # Create keypair and grant access permissions
 echo "Create keypair and grant access permissions"
 microstack.openstack keypair create keyManh > keyManh.pem
