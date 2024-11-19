@@ -29,4 +29,4 @@ microstack.openstack keypair list -f value -c Name | xargs -I {} microstack.open
 echo "Deleting all Floating IPs..."
 microstack.openstack floating ip list -f value -c ID | xargs -I {} microstack.openstack floating ip delete {}
 
-echo "Cleanup completed!"
+echo "Cleanup completed !"
