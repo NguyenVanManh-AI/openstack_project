@@ -53,7 +53,7 @@ sudo chmod +r /snap/microstack/bootscript.sh
 echo "Creating a new server Web-Server..."
 PORT_ID=$(microstack.openstack port list | grep port-N1 | awk '{print $2}')
 microstack.openstack server create \
-  --flavor m1.small \
+  --flavor m1.medium \
   --image "ubuntu18" \
   --key-name keyCuong \
   --security-group webtraffic \
