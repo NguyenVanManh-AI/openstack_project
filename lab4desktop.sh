@@ -111,8 +111,8 @@ sudo iptables -t nat -A POSTROUTING -o ens33 -j MASQUERADE
 echo "microstack.openstack server list"
 microstack.openstack server list
 
-echo "Master VM , pw root  : ssh -i keyManh.pem root@$FLOATING_IP_MASTER"
-echo "Slave VM , pw root  : ssh -i keyManh.pem root@$FLOATING_IP_SLAVE"
+echo "Master VM , password = eve  : ssh -i keyManh.pem eve@$FLOATING_IP_MASTER"
+echo "Slave VM , password = eve  : ssh -i keyManh.pem eve@$FLOATING_IP_SLAVE"
 
 echo "Setup completed !"
 

@@ -97,7 +97,7 @@ echo "curl http://$FLOATING_IP_ADDRESS -> OK"
 
 # Check SSH connection to floating IP address
 echo "Checking SSH connection to floating IP $FLOATING_IP_ADDRESS..."
-echo "ssh -i keyCuong.pem root@$FLOATING_IP_ADDRESS -> OK"
+echo "ssh -i keyCuong.pem eve@$FLOATING_IP_ADDRESS -> OK (password = eve)"
 
 # Check ping connection to floating IP address with time limit (Expected to fail)
 echo "Checking ping connection to floating IP $FLOATING_IP_ADDRESS with time limit of 10 seconds..."
