@@ -99,10 +99,10 @@ sudo iptables -t nat -A POSTROUTING -o ens33 -j MASQUERADE
 echo "microstack.openstack server list"
 microstack.openstack server list
 
-echo "ssh -i keyManh.pem cirros@$FloatingIP"
+echo "ssh -i keyManh.pem cirros@$FloatingIP (password = gocubsgo)"
 echo "Office-VM: ping 192.168.101.100 , ping 8.8.8.8"
 
-echo "Office-VM into Lab-VM : ssh cirros@192.168.101.100"
+echo "Office-VM into Lab-VM : ssh cirros@192.168.101.100 (password = gocubsgo)"
 echo "Lab-VM: ping 10.10.10.100 , ping 8.8.8.8"
 
 echo "Setup completed !"

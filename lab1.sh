@@ -101,7 +101,7 @@ echo "sudo iptables -t nat -A POSTROUTING -o ens33 -j MASQUERADE"
 sudo iptables -t nat -A POSTROUTING -o ens33 -j MASQUERADE
 
 echo "Setup completed successfully."
-echo "ssh -i keyManh.pem cirros@$floating_ip_vm2"
+echo "ssh -i keyManh.pem cirros@$floating_ip_vm2 (password = gocubsgo)"
 
 
 
