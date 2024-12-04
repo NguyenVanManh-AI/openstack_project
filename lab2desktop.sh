@@ -104,4 +104,4 @@ echo "Checking ping connection to floating IP $FLOATING_IP_ADDRESS with time lim
 echo "ping -c 4 -w 10 $FLOATING_IP_ADDRESS -> Fail : Ping failed as expected, ping to floating IP is not allowed."
 
 # Kết thúc
-echo "Script execution completed!"
+echo "Script execution completed !"
