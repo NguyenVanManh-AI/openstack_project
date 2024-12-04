@@ -44,9 +44,9 @@ echo "Creating ports with fixed IPs for master and slave VM"
 microstack.openstack port create --network Server-Net --fixed-ip subnet=Server-Subnet,ip-address=10.10.10.100 Server-Port-1
 microstack.openstack port create --network Server-Net --fixed-ip subnet=Server-Subnet,ip-address=10.10.10.101 Server-Port-2
 
-echo "Creating Master  VM with ubuntu18  image and m1.medium flavor"
+echo "Creating Master  VM with ubuntu18  image and ubuntu18flavor flavor"
 PORT_ID_MASTER=$(sudo microstack.openstack port show Server-Port-1 -f value -c id)
-microstack.openstack server create --image ubuntu18  --flavor m1.medium --key-name keyManh --nic port-id=$PORT_ID_MASTER --user-data vrrp_setup.sh vrrp-master
+microstack.openstack server create --image ubuntu18  --flavor ubuntu18flavor --key-name keyManh --nic port-id=$PORT_ID_MASTER --user-data vrrp_setup.sh vrrp-master
 
 # Chờ cho đến khi Master VM ở trạng thái "ACTIVE"
 echo "Waiting for Master VM to become ACTIVE..."
@@ -59,9 +59,9 @@ done
 echo "Master VM is ACTIVE. Proceeding with next steps."
 # Chờ cho đến khi Master VM ở trạng thái "ACTIVE"
 
-echo "Creating Slave  VM with ubuntu18  image and m1.medium flavor"
+echo "Creating Slave  VM with ubuntu18  image and ubuntu18flavor flavor"
 PORT_ID_SLAVE=$(sudo microstack.openstack port show Server-Port-2 -f value -c id)
-microstack.openstack server create --image ubuntu18   --flavor m1.medium --key-name keyManh --nic port-id=$PORT_ID_SLAVE --user-data vrrp_setup.sh vrrp-slave
+microstack.openstack server create --image ubuntu18   --flavor ubuntu18flavor --key-name keyManh --nic port-id=$PORT_ID_SLAVE --user-data vrrp_setup.sh vrrp-slave
 
 # Chờ cho đến khi Slave VM ở trạng thái "ACTIVE"
 echo "Waiting for Slave VM to become ACTIVE..."
